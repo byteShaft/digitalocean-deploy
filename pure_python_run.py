@@ -1,6 +1,6 @@
 from apt_wrapper import APT
 from git_wrapper import GIT
-from lxd_wrapper import LXD
+# from lxd_wrapper import LXD
 from helpers import raise_if_not_run_as_root, run_command
 
 COMMAND_LXD_INIT = 'lxd init'
