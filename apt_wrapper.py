@@ -30,9 +30,11 @@ class APT:
 
     def upgrade(self, dist_upgrade=False):
         self.apt_cache.upgrade(dist_upgrade)
+        self.apt_cache.commit()
 
     def clean(self):
         self.apt_cache.clear()
+        self.apt_cache.commit()
 
     def install(self, package_list, update=True):
         if update:
