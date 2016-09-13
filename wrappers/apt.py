@@ -8,7 +8,7 @@ from softwareproperties.SoftwareProperties import (
 )
 from softwareproperties.shortcuts import ShortcutException
 
-from helpers import raise_if_not_run_as_root
+from commons import raise_if_not_run_as_root
 
 
 class APT:
@@ -25,7 +25,7 @@ class APT:
             sys.exit(1)
 
     def update(self):
-        self.apt_cache.update(fetch_progress=True)
+        self.apt_cache.update()
         self.apt_cache.open()
 
     def upgrade(self, dist_upgrade=False):

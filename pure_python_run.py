@@ -1,7 +1,7 @@
-from apt_wrapper import APT
-from git_wrapper import GIT
-# from lxd_wrapper import LXD
-from helpers import raise_if_not_run_as_root, run_command
+from lxd_wrapper import LXD
+
+from commons import raise_if_not_run_as_root, run_command
+from wrappers.apt import APT
 
 COMMAND_LXD_INIT = 'lxd init'
 COMMAND_LAUNCH_CONTAINER = 'lxc launch images:{distro}/{release} {name}'
@@ -30,8 +30,8 @@ def _launch_container(name, distro, release):
             name=name, distro=distro, release=release
         )
     )
-    lxd = LXD(name)
-    lxd.wait_for_network()
+    lxd = LXD()
+    lxd.wait_for_network(name)
 
 
 def setup_container(name, distro, release):
