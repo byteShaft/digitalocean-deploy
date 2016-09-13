@@ -25,8 +25,7 @@ class APT:
             sys.exit(1)
 
     def update(self):
-        self.apt_cache.update()
-        self.apt_cache.close()
+        self.apt_cache.update(fetch_progress=True)
         self.apt_cache.open()
 
     def upgrade(self, dist_upgrade=False):
