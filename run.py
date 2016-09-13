@@ -17,10 +17,10 @@ COMMAND_LXD_INIT = 'lxd init'
 COMMAND_LAUNCH_CONTAINER = 'lxc launch images:{distribution}/{release} {alias}'
 COMMAND_EXECUTE_IN_CONTAINER = 'lxc exec {container_name} -- {command}'
 COMMAND_DATABASE_CREATE_MYSQL = """\
-mysql -u root -p{mysql_password} -e \
-"CREATE DATABASE {database_name} CHARACTER SET UTF8; \
-CREATE USER {database_user}@localhost IDENTIFIED BY '{database_password}'; \
-GRANT ALL PRIVILEGES ON {database_name}.* TO {database_user}@localhost; \
+mysql -u root -p -e \
+"CREATE DATABASE {database_name} CHARACTER SET UTF8;\
+CREATE USER {database_user}@localhost IDENTIFIED BY '{database_password}';\
+GRANT ALL PRIVILEGES ON {database_name}.* TO {database_user}@localhost;\
 FLUSH PRIVILEGES;"\
 """
 
@@ -117,7 +117,10 @@ class Container:
             project_git,
             project_name,
             port_number,
-            server_address
+            server_address,
+            database_name,
+            database_user,
+            database_pass,
     ):
         self._run_command(COMMAND_APT_INSTALL.format(packages=deb_packages))
         self._run_command(COMMAND_APT_CLEAN)
@@ -154,6 +157,13 @@ class Container:
                 ),
             )
         )
+        print("Enter mysql root password below.")
+        self._run_command(COMMAND_DATABASE_CREATE_MYSQL.format(
+                database_name=database_name,
+                database_user=database_user,
+                database_password=database_pass
+            )
+        )
 
 
 if __name__ == '__main__':
@@ -163,11 +173,17 @@ if __name__ == '__main__':
         CONTAINER_DISTRIBUTION,
         CONTAINER_DISTRIBUTION_RELEASE
     )
+    DATABASE_NAME = 'mydb'
+    DATABASE_PASS = 'secret'
+    DATABASE_USER = 'ubuntuone'
     container.setup(
         CONTAINER_DEB_PACKAGES,
         CONTAINER_PIP_PACKAGES,
         PROJECT_GIT,
         PROJECT_NAME,
         SERVER_PORT,
-        SERVER_ADDRESS
+        SERVER_ADDRESS,
+        DATABASE_NAME,
+        DATABASE_USER,
+        DATABASE_PASS
     )
