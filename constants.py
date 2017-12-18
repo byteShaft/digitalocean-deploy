@@ -5,9 +5,9 @@ COMMAND_APT_UPGRADE = 'apt -y dist-upgrade'
 COMMAND_ECHO_TO_FILE = 'sh -c \"echo \'{content}\' >> {output_file}\"'
 COMMAND_GIT_CLONE = 'git clone {source} {destination}'
 COMMAND_PIP_INSTALL = 'pip3 install {packages}'
-COMMAND_LXD_PPA_ADD = 'add-apt-repository -y ppa:ubuntu-lxc/lxd-stable'
+COMMAND_LXD_INSTALL = 'snap install lxd'
 COMMAND_LXD_INIT = 'lxd init'
-COMMAND_LAUNCH_CONTAINER = 'lxc launch images:{distribution}/{release} {alias}'
+COMMAND_LAUNCH_CONTAINER = 'lxc launch {distribution}:{release} {alias}'
 COMMAND_EXECUTE_IN_CONTAINER = 'lxc exec {container_name} -- {command}'
 COMMAND_DATABASE_CREATE_MYSQL = """\
 mysql -u root -p -e \
@@ -20,11 +20,10 @@ FLUSH PRIVILEGES;"\
 GUNICORN_UNIT_PATH = '/etc/systemd/system/{project_name}-gunicorn.service'
 NGINX_CONFIG_PATH = '/etc/nginx/sites-available/{project_name}.conf'
 
-CONTAINER_DEB_PACKAGES = 'python3-pip mysql-server nginx libmysqlclient-dev ' \
-                         'git'
+CONTAINER_DEB_PACKAGES = 'python3-pip mysql-server nginx libmysqlclient-dev git'
 CONTAINER_PIP_PACKAGES = 'django djangorestframework mysqlclient gunicorn'
 CONTAINER_DISTRIBUTION = 'ubuntu'
-CONTAINER_DISTRIBUTION_RELEASE = 'xenial'
+CONTAINER_DISTRIBUTION_RELEASE = '16.04'
 CONTAINER_NAME = CONTAINER_DISTRIBUTION_RELEASE
 
 PROJECT_GIT = 'https://github.com/byteShaft/brochure-service.git'
